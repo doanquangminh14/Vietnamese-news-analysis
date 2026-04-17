@@ -34,6 +34,7 @@ def scraper(categories,max_page = 2):
             for i in news:
                 news_details = {}
                 title_elem = i.find(class_='title-news')
+                
                 if not title_elem or not title_elem.find('a'):
                     continue
                 
@@ -41,6 +42,7 @@ def scraper(categories,max_page = 2):
                 news_details["Link"] = title_elem.find('a').get('href')
                 
                 news_details['Category'] = catname
+                
                 
                 desc_elem = i.find('p', {'class': 'description'})
                 if desc_elem:
@@ -72,7 +74,7 @@ def scraper_news_detail(df):
                     
             sleep(random.randint(3,6))
         except Exception as e:
-            pass
+            print(f"Lỗi tại {link}: {e}")
         all_content.append(contents)
     df['Contents'] = all_content
     return df
