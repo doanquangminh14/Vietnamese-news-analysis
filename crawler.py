@@ -18,7 +18,7 @@ categories= {"Thể thao":"https://vnexpress.net/the-thao",
              # "Kinh doanh":"https://vnexpress.net/kinh-doanh"
               }
 
-def scraper(categories,max_page = 2): 
+def scraper(categories,max_page = 1): 
     news_info = []  
     for catname, base_url in categories.items():
         for page in range(1,max_page+1):
