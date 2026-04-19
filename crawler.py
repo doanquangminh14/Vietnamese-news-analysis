@@ -13,12 +13,12 @@ chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_options)
 
 categories= {"Thể thao":"https://vnexpress.net/the-thao",
-             # "Thế giới":"https://vnexpress.net/the-gioi",
-             # "Sức khỏe":"https://vnexpress.net/suc-khoe", 
-             # "Kinh doanh":"https://vnexpress.net/kinh-doanh"
+             "Thế giới":"https://vnexpress.net/the-gioi",
+             "Sức khỏe":"https://vnexpress.net/suc-khoe", 
+             "Kinh doanh":"https://vnexpress.net/kinh-doanh"
               }
 
-def scraper(categories,max_page = 1): 
+def scraper(categories,max_page = 10): 
     news_info = []  
     for catname, base_url in categories.items():
         for page in range(1,max_page+1):
@@ -38,8 +38,11 @@ def scraper(categories,max_page = 1):
                 if not title_elem or not title_elem.find('a'):
                     continue
                 
-                news_details['Title'] = title_elem.find('a').text.strip()
-                news_details["Link"] = title_elem.find('a').get('href')
+                if title_elem and title_elem.find('a'):
+                    news_details['Title'] = title_elem.find('a').text.strip()
+                    news_details["Link"] = title_elem.find('a').get('href')
+                else:
+                    continue
                 
                 news_details['Category'] = catname
                 
@@ -61,6 +64,8 @@ def scraper_news_detail(df):
     
     for link in link_content:
         contents = np.nan
+        if isinstance(link, str) and not link.startswith('http'):
+            link = "https://vnexpress.net" + link
         try:
             driver.get(link)
             html_content = driver.page_source

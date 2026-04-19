@@ -9,15 +9,15 @@ VIETNAMESE_STOPWORDS = {
 }
 
 def tokenize_vi(text):
-    try:
-        tokens = word_tokenize(text, format='text')
-        token_list = tokens.split()
-        cleaned = [
-            t.lower() for t in token_list
-            if t.lower() not in VIETNAMESE_STOPWORDS
-            and len(t) > 1
-            and not t.isdigit()
-        ]
-        return ' '.join(cleaned)
-    except Exception as e:
-        return ''
+  try:
+    tokens = word_tokenize(text, format='text')
+    token_list = tokens.split()
+    cleaned = [
+        t.lower() for t in token_list
+        if t.lower() not in VIETNAMESE_STOPWORDS
+        and len(t) > 1
+        and not t.isdigit()   
+    ]
+    return ' '.join(cleaned)
+  except Exception as e:
+      return ''
